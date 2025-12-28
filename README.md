@@ -141,19 +141,7 @@ Interview-ready LLD concepts
 📌 Note
 
 This is an actively evolving project. Improvements and refactoring will continue as new concepts are learned and applied.
-
-
 ---
 
-### 🔥 Pro Tip (Interview POV)
-Tumhara project already **LLD interview ready** hai.  
-Next level ke liye:
-- README me **ER diagram image**
-- Booking flow explanation (step-by-step)
 
-Agar chaho to next step me main:
-- **Architecture explanation paragraph**
-- **Booking flow diagram description**
-- **Resume-ready project points**
 
-bhi bana deta hoon 🚀
