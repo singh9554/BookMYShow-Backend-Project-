@@ -30,7 +30,7 @@ public class ShowServices {
     @Autowired
     private ShowSeatRepository showSeatRepository;
 
-    private ShowDTO createShow(ShowDTO showDTO){
+    public ShowDTO createShow(ShowDTO showDTO){
 
         Show show = new Show();
 
@@ -48,31 +48,31 @@ public class ShowServices {
         Show saveShow = showRepository.save(show);
 
         List<ShowSeat> availableSeat = showSeatRepository.
-                findByShowIDAndStatus(saveShow.getId(), "AVAILABLE");
+                findByShowIDAndStatus(saveShow.getID(), "AVAILABLE");
 
         return mapToDto(saveShow,availableSeat);
     }
 
     //Find Show by Id
-    private ShowDTO getShowById(Long Id){
+    public ShowDTO getShowById(Long Id){
         Show show = showRepository.findById(Id)
                 .orElseThrow(()-> new ResourceNotFoundException("Show not found by Id: "+Id));
 
         List<ShowSeat> availableSeat = showSeatRepository.
-                findByShowIDAndStatus(show.getId(), "AVAILABLE");
+                findByShowIDAndStatus(show.getID(), "AVAILABLE");
 
         return mapToDto(show,availableSeat);
 
     }
 
     //Find all Show
-    private List<ShowDTO> getAllShow(){
+    public List<ShowDTO> getAllShow(){
         List<Show> show = showRepository.findAll();
 
         return show.stream()
                 .map(shows ->{
                     List<ShowSeat> availableSeat = showSeatRepository.
-                            findByShowIDAndStatus(shows.getId(),"AVAILABLE");
+                            findByShowIDAndStatus(shows.getID(),"AVAILABLE");
 
                     return mapToDto(shows, availableSeat);
                 }).collect(Collectors.toList());
@@ -84,7 +84,7 @@ public class ShowServices {
         return show.stream()
                 .map(shows ->{
                     List<ShowSeat> availableSeat = showSeatRepository.
-                            findByShowIDAndStatus(shows.getId(),"AVAILABLE");
+                            findByShowIDAndStatus(shows.getID(),"AVAILABLE");
 
                     return mapToDto(shows, availableSeat);
                 }).collect(Collectors.toList());
@@ -96,7 +96,7 @@ public class ShowServices {
         return show.stream()
                 .map(shows ->{
                     List<ShowSeat> availableSeat = showSeatRepository.
-                            findByShowIDAndStatus(shows.getId(),"AVAILABLE");
+                            findByShowIDAndStatus(shows.getID(),"AVAILABLE");
 
                     return mapToDto(shows, availableSeat);
                 }).collect(Collectors.toList());
@@ -108,7 +108,7 @@ public class ShowServices {
         return show.stream()
                 .map(shows ->{
                     List<ShowSeat> availableSeat = showSeatRepository.
-                            findByShowIDAndStatus(shows.getId(),"AVAILABLE");
+                            findByShowIDAndStatus(shows.getID(),"AVAILABLE");
 
                     return mapToDto(shows, availableSeat);
                 }).collect(Collectors.toList());
@@ -118,11 +118,11 @@ public class ShowServices {
 
         ShowDTO showDTO = new ShowDTO();
 
-        showDTO.setId(show.getId());
+        showDTO.setId(show.getID());
         showDTO.setStartTime(show.getStartTime());
         showDTO.setEndTime(show.getEndTime());
         showDTO.setMovie(new MovieDTO(
-                show.getMovie().getId(),
+                show.getMovie().getID(),
                 show.getMovie().getTitle(),
                 show.getMovie().getDescription(),
                 show.getMovie().getLanguage(),
@@ -134,7 +134,7 @@ public class ShowServices {
         ));
 
         TheaterDTO theaterDTO = new TheaterDTO(
-                show.getScreen().getTheater().getId(),
+                show.getScreen().getTheater().getID(),
                 show.getScreen().getTheater().getName(),
                 show.getScreen().getTheater().getAddress(),
                 show.getScreen().getTheater().getCity(),
@@ -142,7 +142,7 @@ public class ShowServices {
         );
 
         ScreenDTO screenDTO = new ScreenDTO(
-                show.getScreen().getId(),
+                show.getScreen().getID(),
                 show.getScreen().getName(),
                 show.getScreen().getTotalSeats(),
                 theaterDTO

@@ -7,14 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="show")
+@Table(name="movies_shows")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Show {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long ID;
 
     @Column(nullable = false)
     private LocalDateTime startTime;

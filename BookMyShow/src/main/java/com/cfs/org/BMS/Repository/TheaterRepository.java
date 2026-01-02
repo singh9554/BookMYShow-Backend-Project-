@@ -5,5 +5,5 @@ import java.util.*;
 
 public interface TheaterRepository extends JpaRepository<Theater, Long> {
 
-    List<Theater> findByShowID(String city);
+    List<Theater> findByCity(String city);
 }

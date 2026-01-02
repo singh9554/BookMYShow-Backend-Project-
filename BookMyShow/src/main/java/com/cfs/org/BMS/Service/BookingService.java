@@ -10,6 +10,7 @@ import com.cfs.org.BMS.Repository.ShowSeatRepository;
 import com.cfs.org.BMS.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-
+@Service
 public class BookingService {
 
     @Autowired
@@ -63,7 +64,7 @@ public class BookingService {
         payment.setPaymentTime(LocalDateTime.now());
         payment.setPaymentMethod(bookingRequest.getPaymentMethod());
         payment.setStatus("SUCCESS");
-        payment.setTransactionId(UUID.randomUUID().toString());
+        payment.setTransactionID(UUID.randomUUID().toString());
 
         //Booking
         Booking booking = new Booking();
@@ -89,7 +90,7 @@ public class BookingService {
         return mapToBookingDto(saveBooking, selectedSeats);
     }
  //Get booking by ID;
-    private BookingDTO getByBookingId(Long Id){
+    public BookingDTO getByBookingId(Long Id){
         Booking booking = bookingRepository.findById(Id)
                 .orElseThrow(()-> new ResourceNotFoundException("Booking Not Found"));
 
@@ -109,7 +110,7 @@ public class BookingService {
     }
 
     //Get booking by BookingNumber;
-    private BookingDTO getByBookingNumber(String bookingNumber){
+    public BookingDTO getByBookingNumber(String bookingNumber){
        Booking booking = bookingRepository.findByBookingNumber(bookingNumber)
                .orElseThrow(()-> new ResourceNotFoundException("Booking Not Found"));
 
@@ -120,7 +121,7 @@ public class BookingService {
        return mapToBookingDto(booking, seats);
     }
     //Get by user;
-    private List<BookingDTO> getBookingByUserID(Long userId){
+    public List<BookingDTO> getBookingByUserID(Long userId){
        List<Booking> booking = bookingRepository.findByUserID(userId);
         return booking.stream()
                 .map(booking1 -> {
@@ -132,10 +133,9 @@ public class BookingService {
                 })
                 .collect(Collectors.toList());
     }
-
     //Cancel Booking;
     @Transactional
-    private BookingDTO cancelBooking(Long id){
+    public BookingDTO cancelBooking(Long id){
        Booking booking = bookingRepository.findById(id)
                .orElseThrow(() -> new ResourceNotFoundException("Booking Not Found"));
 
@@ -170,7 +170,7 @@ public class BookingService {
 
         //User
         UserDTO userDto = new UserDTO();
-        userDto.setId(booking.getUser().getId());
+        userDto.setId(booking.getUser().getID());
         userDto.setName(booking.getUser().getName());
         userDto.setEmail(booking.getUser().getEmail());
         userDto.setPhoneNumber(booking.getUser().getPhoneNumber());
@@ -178,13 +178,13 @@ public class BookingService {
 
        //Show
         ShowDTO showDTO = new ShowDTO();
-        showDTO.setId(booking.getShow().getId());
+        showDTO.setId(booking.getShow().getID());
         showDTO.setStartTime(booking.getShow().getStartTime());
         showDTO.setEndTime(booking.getShow().getEndTime());
 
         //Movie
         MovieDTO movieDTO = new MovieDTO();
-        movieDTO.setId(booking.getShow().getMovie().getId());
+        movieDTO.setId(booking.getShow().getMovie().getID());
         movieDTO.setTitle(booking.getShow().getMovie().getTitle());
         movieDTO.setDescription(booking.getShow().getMovie().getDescription());
         movieDTO.setLanguage(booking.getShow().getMovie().getLanguage());
@@ -195,13 +195,13 @@ public class BookingService {
 
         //Screen
         ScreenDTO screenDTO = new ScreenDTO();
-        screenDTO.setId(booking.getShow().getScreen().getId());
+        screenDTO.setId(booking.getShow().getScreen().getID());
         screenDTO.setName(booking.getShow().getScreen().getName());
         screenDTO.setTotalSeats(booking.getShow().getScreen().getTotalSeats());
 
         //Theater
         TheaterDTO theaterDTO = new TheaterDTO();
-        theaterDTO.setId(booking.getShow().getScreen().getTheater().getId());
+        theaterDTO.setId(booking.getShow().getScreen().getTheater().getID());
         theaterDTO.setName(booking.getShow().getScreen().getTheater().getName());
         theaterDTO.setAddress(booking.getShow().getScreen().getTheater().getAddress());
         theaterDTO.setCity(booking.getShow().getScreen().getTheater().getCity());
@@ -239,7 +239,7 @@ public class BookingService {
                paymentDTO.setAmount(booking.getPayment().getAmount());
                paymentDTO.setPaymentMethod(booking.getPayment().getPaymentMethod());
                paymentDTO.setPaymentTime(booking.getPayment().getPaymentTime());
-               paymentDTO.setTransactionId(booking.getPayment().getTransactionId());
+               paymentDTO.setTransactionId(booking.getPayment().getTransactionID());
                bookingDTO.setPayment(paymentDTO);
            }
 

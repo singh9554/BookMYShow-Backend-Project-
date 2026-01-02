@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Screen {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long ID;
 
     @Column(nullable = false)
     private String name;

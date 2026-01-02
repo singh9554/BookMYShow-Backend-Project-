@@ -17,7 +17,7 @@ public class MovieServices {
     private MovieRepository movieRepository;
 
     //CreateMovie
-    private MovieDTO createMovie(MovieDTO movieDTO){
+    public MovieDTO createMovie(MovieDTO movieDTO){
 
         Movie movie = mapToEntity(movieDTO);
         Movie saveMove = movieRepository.save(movie);
@@ -26,7 +26,7 @@ public class MovieServices {
     }
 
     //getMovie
-    private MovieDTO getMovieById(Long id){
+    public MovieDTO getMovieById(Long id){
 
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Movie Not found by Id: "+ id));
@@ -34,7 +34,7 @@ public class MovieServices {
          return mapToDTO(movie);
     }
 
-    public List<MovieDTO> getAllMovie(){
+    public List<MovieDTO> getAllMovies(){
 
         List<Movie> movie = movieRepository.findAll();
 
@@ -64,7 +64,7 @@ public class MovieServices {
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Movie Not found by Id: "+ id));
 
-        movie.setId(movieDTO.getId());
+        movie.setID(movieDTO.getId());
         movie.setTitle(movieDTO.getTitle());
         movie.setGenre(movieDTO.getGenre());
         movie.setLanguage(movieDTO.getLanguage());
@@ -90,7 +90,7 @@ public class MovieServices {
 
         MovieDTO movieDTO = new MovieDTO();
 
-        movieDTO.setId(movie.getId());
+        movieDTO.setId(movie.getID());
         movieDTO.setTitle(movie.getTitle());
         movieDTO.setLanguage(movie.getLanguage());
         movieDTO.setDescription(movie.getDescription());
@@ -107,7 +107,7 @@ public class MovieServices {
 
         Movie movie = new Movie();
 
-        movie.setId(movieDTO.getId());
+        movie.setID(movieDTO.getId());
         movie.setTitle(movieDTO.getTitle());
         movie.setGenre(movieDTO.getGenre());
         movie.setLanguage(movieDTO.getLanguage());
